@@ -1,0 +1,19 @@
+function myFunction() {
+  var sheet = SpreadsheetApp.getActiveSheet();
+  var startRow = 2;
+  var numRows = sheet.getMaxRows();
+  var dataRange = sheet.getRange(startRow, 1, numRows, 6);
+  var data = dataRange.getValues();
+  for (var i in data) {
+    var row = data[i];
+    if (row[5].toString().indexOf("@mckinleyhomes.builders") > -1 || row[5].toString().indexOf("@me.com") > -1){
+      var emailAddress = row[5];
+      var message = "Buenos Dias " + String(row[2]) + ",\n" + "Obra: " + String(row[0])+ "\n" + "\Items Pendientes: " + String(row[1]) +  "\n" +"Detalles del trabajo: " + row[3] +  "\n" + "Fecha: " + Utilities.formatDate(row[4],'America/Chicago','MM / dd / yyyy');
+      Logger.log(Utilities.formatDate(row[4],'America/Chicago',' MM/dd/yyyy'));
+      var subject = 'Trabajos Pendientes';
+      Logger.log(emailAddress);
+      GmailApp.sendEmail(emailAddress, subject, message);
+    }
+  }
+}
+
